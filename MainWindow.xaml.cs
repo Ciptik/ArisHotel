@@ -48,7 +48,7 @@ namespace ArisHotel
             ResetButtonStyles();
 
             // Set current button style
-            button.Background = new SolidColorBrush(Colors.LightBlue);
+            button.Background = new SolidColorBrush(Color.FromRgb(39, 174, 96)); // #FF27AE60 - зеленый для активной кнопки
 
             // Set current data type
             if (button == btnRoles)
@@ -65,10 +65,10 @@ namespace ArisHotel
 
         private void ResetButtonStyles()
         {
-            btnRoles.Background = SystemColors.ControlBrush;
-            btnUsers.Background = SystemColors.ControlBrush;
-            btnRooms.Background = SystemColors.ControlBrush;
-            btnBookings.Background = SystemColors.ControlBrush;
+            btnRoles.Background = new SolidColorBrush(Color.FromRgb(52, 152, 219)); // #FF3498DB
+            btnUsers.Background = new SolidColorBrush(Color.FromRgb(52, 152, 219)); // #FF3498DB
+            btnRooms.Background = new SolidColorBrush(Color.FromRgb(52, 152, 219)); // #FF3498DB
+            btnBookings.Background = new SolidColorBrush(Color.FromRgb(52, 152, 219)); // #FF3498DB
         }
 
         private void LoadData()

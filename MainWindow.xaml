@@ -55,34 +55,113 @@
         
         <!-- DataGrid -->
         <Border Grid.Row="2" Margin="20,20,20,10" Background="White" 
-                BorderBrush="#FFBDC3C7" BorderThickness="1" CornerRadius="5">
+                BorderBrush="#FFBDC3C7" BorderThickness="1" CornerRadius="8">
             <DataGrid x:Name="dataGrid" Margin="0" 
                       AutoGenerateColumns="False" 
                       CanUserAddRows="False" 
                       CanUserDeleteRows="False"
-                      GridLinesVisibility="Horizontal"
+                      GridLinesVisibility="None"
                       SelectionMode="Single"
                       SelectionUnit="FullRow"
                       Background="White"
                       BorderThickness="0"
                       RowHeaderWidth="0"
-                      HeadersVisibility="Column">
+                      HeadersVisibility="Column"
+                      AlternatingRowBackground="#FFF8F9FA">
+                <DataGrid.Resources>
+                    <!-- Стиль для кнопок в датагриде -->
+                    <Style x:Key="DataGridButtonStyle" TargetType="Button">
+                        <Setter Property="Background" Value="#FF2C3E50"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" 
+                                            CornerRadius="4" 
+                                            Padding="8,4">
+                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                        VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#FF34495E"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter Property="Background" Value="#FF1A252F"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    
+                    <!-- Стиль для кнопки удаления -->
+                    <Style x:Key="DeleteButtonStyle" TargetType="Button" BasedOn="{StaticResource DataGridButtonStyle}">
+                        <Setter Property="Background" Value="#FFE74C3C"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFC0392B"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FFA93226"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+                
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Background" Value="#FF34495E"/>
+                        <Setter Property="Background" Value="#FF2C3E50"/>
                         <Setter Property="Foreground" Value="White"/>
                         <Setter Property="FontWeight" Value="SemiBold"/>
-                        <Setter Property="Padding" Value="10,8"/>
+                        <Setter Property="FontSize" Value="13"/>
+                        <Setter Property="Padding" Value="12,10"/>
                         <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF34495E"/>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
+                
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Setter Property="Background" Value="White"/>
                         <Setter Property="BorderBrush" Value="#FFECF0F1"/>
                         <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="MinHeight" Value="40"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFF8F9FA"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FFE3F2FD"/>
+                                <Setter Property="BorderBrush" Value="#FF2196F3"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
                 </DataGrid.RowStyle>
+                
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Padding" Value="8,6"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+                
                 <DataGrid.Columns>
                     <!-- Dynamic columns will be added in code-behind -->
                 </DataGrid.Columns>

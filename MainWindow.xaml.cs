@@ -158,14 +158,15 @@ namespace ArisHotel
             var editColumn = new DataGridTemplateColumn
             {
                 Header = "Редактировать",
-                Width = 100
+                Width = 120
             };
             var editTemplate = new DataTemplate();
             var editButton = new FrameworkElementFactory(typeof(Button));
-            editButton.SetValue(Button.ContentProperty, "Редактировать");
-            editButton.SetValue(Button.WidthProperty, 80.0);
-            editButton.SetValue(Button.HeightProperty, 25.0);
-            editButton.SetValue(Button.FontSizeProperty, 10.0);
+            editButton.SetValue(Button.ContentProperty, "✏️ Редактировать");
+            editButton.SetValue(Button.WidthProperty, 100.0);
+            editButton.SetValue(Button.HeightProperty, 32.0);
+            editButton.SetValue(Button.FontSizeProperty, 11.0);
+            editButton.SetValue(Button.StyleProperty, dataGrid.FindResource("DataGridButtonStyle"));
             editButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(EditButton_Click));
             editTemplate.VisualTree = editButton;
             editColumn.CellTemplate = editTemplate;
@@ -175,15 +176,15 @@ namespace ArisHotel
             var deleteColumn = new DataGridTemplateColumn
             {
                 Header = "Удалить",
-                Width = 100
+                Width = 120
             };
             var deleteTemplate = new DataTemplate();
             var deleteButton = new FrameworkElementFactory(typeof(Button));
-            deleteButton.SetValue(Button.ContentProperty, "Удалить");
-            deleteButton.SetValue(Button.WidthProperty, 80.0);
-            deleteButton.SetValue(Button.HeightProperty, 25.0);
-            deleteButton.SetValue(Button.FontSizeProperty, 10.0);
-            deleteButton.SetValue(Button.BackgroundProperty, new SolidColorBrush(Colors.LightCoral));
+            deleteButton.SetValue(Button.ContentProperty, "🗑️ Удалить");
+            deleteButton.SetValue(Button.WidthProperty, 100.0);
+            deleteButton.SetValue(Button.HeightProperty, 32.0);
+            deleteButton.SetValue(Button.FontSizeProperty, 11.0);
+            deleteButton.SetValue(Button.StyleProperty, dataGrid.FindResource("DeleteButtonStyle"));
             deleteButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(DeleteButton_Click));
             deleteTemplate.VisualTree = deleteButton;
             deleteColumn.CellTemplate = deleteTemplate;

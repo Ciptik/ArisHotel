@@ -64,6 +64,7 @@ namespace ArisHotel
                     room.Capacity = capacity;
                     room.Price = price;
                     Session.context.SaveChanges();
+                    LogService.Instance.Info("Номер — обновление", $"Id: {room.RoomId}, Number: {room.RoomNumber}, Capacity: {room.Capacity}, Price: {room.Price}");
                     MessageBox.Show("Номер успешно обновлен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -73,6 +74,7 @@ namespace ArisHotel
                     if (existingRoom != null)
                     {
                         MessageBox.Show("Комната с таким номером уже существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        LogService.Instance.Warn("Номер — отказ добавления", $"Дубликат номера: {txtRoomNumber.Text.Trim()}");
                         return;
                     }
 
@@ -85,6 +87,7 @@ namespace ArisHotel
                     };
                     Session.context.Rooms.Add(newRoom);
                     Session.context.SaveChanges();
+                    LogService.Instance.Info("Номер — добавление", $"Id: {newRoom.RoomId}, Number: {newRoom.RoomNumber}, Capacity: {newRoom.Capacity}, Price: {newRoom.Price}");
                     MessageBox.Show("Номер успешно добавлен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
@@ -93,6 +96,7 @@ namespace ArisHotel
             }
             catch (Exception ex)
             {
+                LogService.Instance.Error("Номер — ошибка сохранения", ex.Message);
                 MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

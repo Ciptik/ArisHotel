@@ -85,6 +85,7 @@ namespace ArisHotel
                     booking.StartDate = dpStartDate.SelectedDate.Value;
                     booking.EndDate = dpEndDate.SelectedDate.Value;
                     Session.context.SaveChanges();
+                    LogService.Instance.Info("Бронирование — обновление", $"Id: {booking.BookingId}, RoomId: {booking.RoomId}, Guest: {booking.GuestName}, {booking.StartDate:yyyy-MM-dd}..{booking.EndDate:yyyy-MM-dd}");
                     MessageBox.Show("Бронирование успешно обновлено.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -100,6 +101,7 @@ namespace ArisHotel
                     };
                     Session.context.Bookings.Add(newBooking);
                     Session.context.SaveChanges();
+                    LogService.Instance.Info("Бронирование — добавление", $"Id: {newBooking.BookingId}, RoomId: {newBooking.RoomId}, Guest: {newBooking.GuestName}, {newBooking.StartDate:yyyy-MM-dd}..{newBooking.EndDate:yyyy-MM-dd}");
                     MessageBox.Show("Бронирование успешно добавлено.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
@@ -108,6 +110,7 @@ namespace ArisHotel
             }
             catch (Exception ex)
             {
+                LogService.Instance.Error("Бронирование — ошибка сохранения", ex.Message);
                 MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

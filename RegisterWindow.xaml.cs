@@ -28,6 +28,7 @@ namespace ArisHotel
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || cmbRoles.SelectedItem == null)
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.", "Проверка данных", MessageBoxButton.OK, MessageBoxImage.Warning);
+                LogService.Instance.Warn("Регистрация — валидация", "Не заполнены все поля");
                 return;
             }
 
@@ -36,6 +37,7 @@ namespace ArisHotel
             if (exists)
             {
                 MessageBox.Show("Пользователь с таким именем уже существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                LogService.Instance.Warn("Регистрация — отказ", $"Пользователь уже существует: {username}");
                 return;
             }
 
@@ -52,6 +54,7 @@ namespace ArisHotel
             Session.context.SaveChanges();
 
             MessageBox.Show("Пользователь успешно создан.", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
+            LogService.Instance.Info("Регистрация — успех", $"Создан пользователь: {newUser.UserName}, РольId: {newUser.RoleId}");
             this.Close();
         }
 

@@ -18,6 +18,7 @@ namespace ArisHotel
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Пожалуйста, введите имя пользователя и пароль.", "Проверка данных", MessageBoxButton.OK, MessageBoxImage.Warning);
+                LogService.Instance.Warn("Попытка входа", "Пустые поля логина/пароля");
                 return;
             }
 
@@ -27,11 +28,13 @@ namespace ArisHotel
             if (user == null)
             {
                 MessageBox.Show("Неверное имя пользователя или пароль.", "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Error);
+                LogService.Instance.Warn("Неуспешный вход", $"Имя: {username}");
                 return;
             }
 
             // Устанавливаем текущего пользователя
             Session.currentUser = user;
+            LogService.Instance.Info("Успешный вход", $"Имя: {user.UserName}, Роль: {user.RoleId}");
 
             // Открываем главное окно
             var main = new MainWindow();
@@ -42,6 +45,7 @@ namespace ArisHotel
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
+            LogService.Instance.Info("Открытие регистрации");
             var reg = new RegisterWindow { Owner = this };
             reg.ShowDialog();
         }

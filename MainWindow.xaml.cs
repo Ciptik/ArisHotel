@@ -24,6 +24,7 @@ namespace ArisHotel
             InitializeComponent();
             LoadUserInfo();
             LoadData();
+            LogService.Instance.Info("Открыто главное окно");
         }
 
         private void LoadUserInfo()
@@ -60,6 +61,7 @@ namespace ArisHotel
             else if (button == btnBookings)
                 currentDataType = DataType.Bookings;
 
+            LogService.Instance.Info("Навигация", $"Раздел: {currentDataType}");
             LoadData();
         }
 
@@ -265,6 +267,7 @@ namespace ArisHotel
                             {
                                 Session.context.Roles.Remove(role);
                                 Session.context.SaveChanges();
+                                LogService.Instance.Info("Удаление — роль", $"Id: {role.RoleId}, Name: {role.RoleName}");
                             }
                             break;
                         case DataType.Users:
@@ -273,6 +276,7 @@ namespace ArisHotel
                             {
                                 Session.context.Users.Remove(user);
                                 Session.context.SaveChanges();
+                                LogService.Instance.Info("Удаление — пользователь", $"Id: {user.UserId}, Name: {user.UserName}");
                             }
                             break;
                         case DataType.Rooms:
@@ -281,6 +285,7 @@ namespace ArisHotel
                             {
                                 Session.context.Rooms.Remove(room);
                                 Session.context.SaveChanges();
+                                LogService.Instance.Info("Удаление — номер", $"Id: {room.RoomId}, Number: {room.RoomNumber}");
                             }
                             break;
                         case DataType.Bookings:
@@ -289,6 +294,7 @@ namespace ArisHotel
                             {
                                 Session.context.Bookings.Remove(booking);
                                 Session.context.SaveChanges();
+                                LogService.Instance.Info("Удаление — бронирование", $"Id: {booking.BookingId}, Guest: {booking.GuestName}");
                             }
                             break;
                     }
@@ -297,6 +303,7 @@ namespace ArisHotel
                 }
                 catch (Exception ex)
                 {
+                    LogService.Instance.Error("Ошибка удаления", ex.Message);
                     MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
@@ -304,6 +311,7 @@ namespace ArisHotel
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
+            LogService.Instance.Info("Добавление — открытие формы", $"Для: {currentDataType}");
             switch (currentDataType)
             {
                 case DataType.Roles:
@@ -311,6 +319,7 @@ namespace ArisHotel
                     if (roleWindow.ShowDialog() == true)
                     {
                         LoadData();
+                        LogService.Instance.Info("Добавление — роль завершено");
                     }
                     break;
                 case DataType.Users:
@@ -318,6 +327,7 @@ namespace ArisHotel
                     if (userWindow.ShowDialog() == true)
                     {
                         LoadData();
+                        LogService.Instance.Info("Добавление — пользователь завершено");
                     }
                     break;
                 case DataType.Rooms:
@@ -325,6 +335,7 @@ namespace ArisHotel
                     if (roomWindow.ShowDialog() == true)
                     {
                         LoadData();
+                        LogService.Instance.Info("Добавление — номер завершено");
                     }
                     break;
                 case DataType.Bookings:
@@ -332,6 +343,7 @@ namespace ArisHotel
                     if (bookingWindow.ShowDialog() == true)
                     {
                         LoadData();
+                        LogService.Instance.Info("Добавление — бронирование завершено");
                     }
                     break;
             }
@@ -339,10 +351,18 @@ namespace ArisHotel
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
+            LogService.Instance.Info("Выход из системы", Session.currentUser != null ? $"Имя: {Session.currentUser.UserName}" : null);
             Session.currentUser = null; // обнуляем текущего пользователя
             var login = new LoginWindow();
             login.Show();
             this.Close();
+        }
+
+        private void BtnOpenLog_Click(object sender, RoutedEventArgs e)
+        {
+            var wnd = new LogWindow { Owner = this };
+            wnd.Show();
+            LogService.Instance.Info("Открыт журнал действий");
         }
     }
 }

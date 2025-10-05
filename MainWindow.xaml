@@ -23,6 +23,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 
                 <!-- Navigation buttons -->
@@ -50,6 +51,12 @@
                         FontSize="14" FontWeight="SemiBold" 
                         Background="#FF27AE60" Foreground="White" BorderThickness="0"
                         Click="BtnAdd_Click"/>
+
+                <!-- Log button -->
+                <Button x:Name="btnOpenLog" Grid.Column="2" Content="Журнал" Width="120" Height="35" Margin="10,0,0,0"
+                        FontSize="14" FontWeight="SemiBold"
+                        Background="#FF8E44AD" Foreground="White" BorderThickness="0"
+                        Click="BtnOpenLog_Click"/>
             </Grid>
         </Border>
         

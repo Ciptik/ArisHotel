@@ -47,6 +47,7 @@ namespace ArisHotel
                     // Редактирование существующей роли
                     role.RoleName = txtRoleName.Text.Trim();
                     Session.context.SaveChanges();
+                    LogService.Instance.Info("Роль — обновление", $"Id: {role.RoleId}, Name: {role.RoleName}");
                     MessageBox.Show("Роль успешно обновлена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -58,6 +59,7 @@ namespace ArisHotel
                     };
                     Session.context.Roles.Add(newRole);
                     Session.context.SaveChanges();
+                    LogService.Instance.Info("Роль — добавление", $"Id: {newRole.RoleId}, Name: {newRole.RoleName}");
                     MessageBox.Show("Роль успешно добавлена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
@@ -66,6 +68,7 @@ namespace ArisHotel
             }
             catch (Exception ex)
             {
+                LogService.Instance.Error("Роль — ошибка сохранения", ex.Message);
                 MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

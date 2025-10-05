@@ -71,6 +71,7 @@ namespace ArisHotel
                     user.Password = txtPassword.Text.Trim();
                     user.RoleId = (int)cmbRole.SelectedValue;
                     Session.context.SaveChanges();
+                    LogService.Instance.Info("Пользователь — обновление", $"Id: {user.UserId}, Name: {user.UserName}, RoleId: {user.RoleId}");
                     MessageBox.Show("Пользователь успешно обновлен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -80,6 +81,7 @@ namespace ArisHotel
                     if (existingUser != null)
                     {
                         MessageBox.Show("Пользователь с таким именем уже существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        LogService.Instance.Warn("Пользователь — отказ добавления", $"Дубликат имени: {txtUserName.Text.Trim()}");
                         return;
                     }
 
@@ -92,6 +94,7 @@ namespace ArisHotel
                     };
                     Session.context.Users.Add(newUser);
                     Session.context.SaveChanges();
+                    LogService.Instance.Info("Пользователь — добавление", $"Id: {newUser.UserId}, Name: {newUser.UserName}, RoleId: {newUser.RoleId}");
                     MessageBox.Show("Пользователь успешно добавлен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
@@ -100,6 +103,7 @@ namespace ArisHotel
             }
             catch (Exception ex)
             {
+                LogService.Instance.Error("Пользователь — ошибка сохранения", ex.Message);
                 MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
